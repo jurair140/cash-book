@@ -4,6 +4,8 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Landing from './pages/Landing'
 import Dashborad from './pages/Dashborad'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -16,6 +18,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/dash" element={<Dashborad />} />
         </Routes>
+        <ToastContainer/>
     </>
   )
 }

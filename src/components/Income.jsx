@@ -6,6 +6,8 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useDispatch,useSelector } from 'react-redux';
 import { addIncome,editIncome,deleteIncome } from '../redux/slice/transactionSlice';
+import { toast } from 'react-toastify';
+
 
 
 
@@ -37,25 +39,28 @@ function Income() {
 
     const handleAddIncome = () => {
       if (!income.date || !income.title || !income.amount){
-        alert('Please fill all fields')
+        toast.warning('Please fill all fields')
       }
       else{
       dispatch(addIncome({ ...income, id: Date.now(), amount: parseFloat(income.amount) }))
       handleClose()
+      toast.success("Income added")
     }
     }
     const handleEditIncome = () => {
       if (!income.date || !income.title || !income.amount){
-        alert("please fill all feilds")
+        toast.warning("please fill all feilds")
       }
       else{
       dispatch(editIncome({ id: incomeList[editIndex].id, updatedIncome: { ...income, amount: parseFloat(income.amount) } }));
       handleEditClose();
+      toast.success("Income updated");
     }
     }
     const handleDeleteIncome = (index) => {
       const id = incomeList[index].id; 
-      dispatch(deleteIncome(id)); 
+      dispatch(deleteIncome(id));
+      toast.success("Income deleted");
   }; 
   const totalIncome = incomeList.reduce((total, item) => total + item.amount, 0);
   

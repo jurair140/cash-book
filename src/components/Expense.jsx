@@ -6,6 +6,8 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { addExpense, editExpense, deleteExpense } from '../redux/slice/transactionSlice';
+import { toast } from 'react-toastify';
+
 
 function Expense() {
     const [show, setShow] = useState(false);
@@ -31,24 +33,28 @@ function Expense() {
 
     const handleAddExpense = () => {
         if (!expense.date || !expense.title || !expense.amount) {
-            alert('Please fill all fields');
+            toast.warning("Please fill all the fields");
         } else {
             dispatch(addExpense({ ...expense, id: Date.now(), amount: parseFloat(expense.amount) }));
             handleClose();
+            toast.success("expense added")
+           
         }
     };
     const handleEditExpense = () => {
         if (!expense.date || !expense.title || !expense.amount) {
-            alert('Please fill all fields');
+            toast.warning('Please fill all fields');
         } else {
             dispatch(editExpense({ id: expenseList[editIndex].id, updatedExpense: { ...expense, amount: parseFloat(expense.amount) } }));
             handleEditClose();
+            toast.success('Expense updated');
         }
     };
 
     const handleDeleteExpense = (index) => {
         const id = expenseList[index].id;
         dispatch(deleteExpense(id));
+        toast.success('Expense deleted');
     };
 
     const totalExpense = expenseList.reduce((total, item) => total + item.amount, 0);
